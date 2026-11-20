@@ -1,0 +1,233 @@
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ItemAnswer, ItemStatus, SegmentCalculation } from '../types/audit';
+import { f2 } from '../utils/formatters';
+import { PASS_SCORE, SEGMENTS } from '../data/segments';
+import { SegmentItem } from './SegmentItem';
+import { ChevronRight, ChevronLeft, ArrowRight, ChevronDown, ChevronUp, AlertTriangle, Lock } from 'lucide-react';
+
+interface SegmentCardProps {
+  segmentData: SegmentCalculation;
+  answers: Record<string, ItemAnswer>;
+  photos: Record<string, string[]>;
+  totalSegments?: number;
+  isOpen?: boolean;
+  isFocused?: boolean;
+  isAuditComplete?: boolean;
+  pendingTotalCount?: number;
+  onGoToFirstPending?: () => void;
+  onToggle?: () => void;
+  onChoice: (segmentIndex: number, itemIndex: number, status: ItemStatus) => void;
+  onPartialScore: (segmentIndex: number, itemIndex: number, value: number) => void;
+  onAdjustPartialScore: (segmentIndex: number, itemIndex: number, step: number) => void;
+  onObservation: (segmentIndex: number, itemIndex: number, obs: string) => void;
+  onMarkPendingAsOk: (segmentIndex: number) => void;
+  onAddPhoto: (segmentIndex: number, itemIndex: number, photoIdOrUrl: string) => void;
+  onRemovePhoto: (segmentIndex: number, itemIndex: number, photoIdOrUrl: string) => void;
+  onViewPhoto: (photoSrc: string) => void;
+  onFlashMessage?: (msg: string, isErr?: boolean) => void;
+  uploadAsset?: (blob: Blob) => Promise<{ id: string } | null>;
+  onNextSegment?: () => void;
+  onPrevSegment?: () => void;
+  onJumpToSummary?: () => void;
+}
+
+export const SegmentCard: React.FC<SegmentCardProps> = ({
+  segmentData,
+  answers,
+  photos,
+  totalSegments,
+  isOpen = true,
+  isFocused = false,
+  isAuditComplete = false,
+  pendingTotalCount = 0,
+  onGoToFirstPending,
+  onToggle,
+  onChoice,
+  onPartialScore,
+  onAdjustPartialScore,
+  onObservation,
+  onMarkPendingAsOk,
+  onAddPhoto,
+  onRemovePhoto,
+  onViewPhoto,
+  onFlashMessage,
+  uploadAsset,
+  onNextSegment,
+  onPrevSegment,
+  onJumpToSummary
+}) => {
+  const { seg, si, ideal, real, pct, segDone } = segmentData;
+  const isStarted = segDone > 0;
+  const maxSegs = totalSegments || SEGMENTS.length;
+  const isLastSegment = si === maxSegs - 1;
+  const stackRef = useRef<HTMLDivElement>(null);
+
+  // Stagger animation for 2x2 item cards on segment change
+  useEffect(() => {
+    if (stackRef.current) {
+      gsap.fromTo(
+        stackRef.current.children,
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.3, stagger: 0.03, ease: 'power2.out' }
+      );
+    }
+  }, [si]);
+
+  const getPctBadgeClass = () => {
+    if (!isStarted) return 'badge-neutral';
+    if (pct >= PASS_SCORE) return 'badge-ok';
+    if (pct >= 60) return 'badge-warn';
+    return 'badge-bad';
+  };
+
+  return (
+    <div className={`segment-container ${isFocused ? 'is-focused-view' : 'is-list-view'}`} id={`seg${si + 1}`}>
+      {/* Header bar */}
+      <div 
+        className="segment-card-header"
+        onClick={!isFocused ? onToggle : undefined}
+        role={!isFocused ? "button" : undefined}
+      >
+        <div className="seg-header-info">
+          <div className="seg-header-top-meta">
+            <span className="seg-index-tag">{si + 1} de {maxSegs}</span>
+            <div className="seg-header-badges">
+              {segDone < seg.items.length && (
+                <button
+                  type="button"
+                  className="btn-quick-fill-ok"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onMarkPendingAsOk(si);
+                  }}
+                  title="Marcar resto del segmento como Cumple"
+                >
+                  <span>Todo OK ({seg.items.length - segDone})</span>
+                </button>
+              )}
+              <span className={`seg-score-pill num ${getPctBadgeClass()}`}>
+                {isStarted ? `${pct.toFixed(0)}%` : '0%'}
+              </span>
+              {!isFocused && onToggle && (
+                <button type="button" className="icon-btn-subtle" aria-label="Colapsar o expandir">
+                  {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+              )}
+            </div>
+          </div>
+          
+          <h2 className="seg-name-heading">{seg.name}</h2>
+          
+          <p className="seg-stats-text">
+            <span>Evaluados: <b>{segDone}/{seg.items.length}</b></span>
+            <span className="dot-sep">·</span>
+            <span>Puntos: <b>{f2(real)}</b> / {f2(ideal)}</span>
+          </p>
+        </div>
+      </div>
+
+      {isOpen && (
+        <div className="segment-body-wrapper">
+          {/* List of segment items in 2x2 grid */}
+          <div ref={stackRef} className="segment-items-stack">
+            {seg.items.map((it, ii) => {
+              const key = `${si}-${ii}`;
+              return (
+                <SegmentItem
+                  key={key}
+                  segmentIndex={si}
+                  itemIndex={ii}
+                  itemDef={it}
+                  answer={answers[key]}
+                  photos={photos[key]}
+                  onChoice={onChoice}
+                  onPartialScore={onPartialScore}
+                  onAdjustPartialScore={onAdjustPartialScore}
+                  onObservation={onObservation}
+                  onAddPhoto={onAddPhoto}
+                  onRemovePhoto={onRemovePhoto}
+                  onViewPhoto={onViewPhoto}
+                  onFlashMessage={onFlashMessage}
+                  uploadAsset={uploadAsset}
+                />
+              );
+            })}
+          </div>
+
+          {/* If on last segment and audit is incomplete, show clear alert */}
+          {isFocused && isLastSegment && !isAuditComplete && (
+            <div className="submit-audit-locked-banner">
+              <div className="locked-banner-icon">
+                <AlertTriangle size={18} />
+              </div>
+              <div className="locked-banner-text">
+                <strong>Auditoría incompleta</strong>
+                <p>
+                  {pendingTotalCount === 1
+                    ? 'Falta responder 1 ítem para habilitar el botón de envío.'
+                    : `Faltan responder ${pendingTotalCount} ítems en total para habilitar el botón de envío.`}
+                </p>
+              </div>
+              {onGoToFirstPending && (
+                <button
+                  type="button"
+                  className="btn-locked-banner-action"
+                  onClick={onGoToFirstPending}
+                  title="Ir al primer ítem pendiente"
+                >
+                  <span>Ir al ítem pendiente</span>
+                  <ArrowRight size={14} />
+                </button>
+              )}
+            </div>
+          )}
+
+          {/* Focus mode navigation footer */}
+          {isFocused && (
+            <div className="segment-focus-footer">
+              {si > 0 && onPrevSegment ? (
+                <button
+                  type="button"
+                  className="btn btn-outline"
+                  onClick={onPrevSegment}
+                >
+                  <ChevronLeft size={18} />
+                  <span>Anterior</span>
+                </button>
+              ) : (
+                <div />
+              )}
+
+              {!isLastSegment && onNextSegment ? (
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={onNextSegment}
+                >
+                  <span>Siguiente segmento</span>
+                  <ChevronRight size={18} />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className={`btn btn-success btn-submit-audit ${!isAuditComplete ? 'is-disabled' : ''}`}
+                  disabled={!isAuditComplete}
+                  onClick={isAuditComplete ? onJumpToSummary : undefined}
+                  title={
+                    isAuditComplete
+                      ? 'Enviar evaluación y finalizar auditoría'
+                      : `Faltan ${pendingTotalCount} ítem${pendingTotalCount === 1 ? '' : 's'} por evaluar para poder enviar la evaluación`
+                  }
+                >
+                  <span>Enviar Evaluación</span>
+                  {isAuditComplete ? <ArrowRight size={18} /> : <Lock size={16} />}
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
