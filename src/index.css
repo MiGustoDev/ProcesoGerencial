@@ -3,9 +3,11 @@
    ========================================================================== */
 
 :root {
-  /* Slate / Dark Backgrounds */
-  --bg: #0b0f19;
-  --bg-gradient: linear-gradient(180deg, #070a11 0%, #0b0f19 100%);
+  /* Fondo Opción 2: Azul Pizarra Mate */
+  --bg: #162540;
+  --bg-gradient: linear-gradient(180deg, #121e35 0%, #1a2c4c 100%);
+
+  /* Superficies y Formulario Originales */
   --surface: #131b2e;
   --surface-hover: #19233c;
   --surface-2: #1e293b;
@@ -16,7 +18,7 @@
   --line: #1e293b;
   --line-strong: #334155;
 
-  /* Accent & Interaction (Clean Slate Blue) */
+  /* Botones y Acentos Originales */
   --accent: #3b82f6;
   --accent-hover: #60a5fa;
   --accent-soft: rgba(59, 130, 246, 0.15);
@@ -79,27 +81,27 @@ html {
   height: 100%;
   color-scheme: dark;
   scrollbar-width: thin;
-  scrollbar-color: #1e293b #0b0f19;
+  scrollbar-color: #273e66 #162540;
 }
 
-/* CUSTOM DARK SCROLLBAR */
+/* CUSTOM SCROLLBAR */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0b0f19;
+  background: #162540;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #273e66;
   border-radius: 9999px;
-  border: 2px solid #0b0f19;
+  border: 2px solid #162540;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #39568c;
 }
 
 body {
@@ -195,17 +197,18 @@ input[type="date"],
   width: 100%;
   padding: 24px 20px 32px 20px;
   text-align: center;
-  color: var(--fg-subtle);
+  color: var(--fg-muted);
   font-size: 0.78rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   position: static;
   clear: both;
 }
 
 .app-footer p {
   margin: 0;
-  color: var(--fg-subtle);
-  opacity: 0.65;
+  color: var(--fg-muted);
+  font-weight: 400;
+  opacity: 0.7;
 }
 
 @media (max-width: 600px) {
@@ -887,7 +890,9 @@ input[type="date"],
   font-size: 0.9rem;
 }
 
-.field-item input {
+.field-item input,
+.field-item select,
+.field-select {
   width: 100%;
   padding: 8px 10px;
   border-radius: var(--radius-md);
@@ -897,11 +902,155 @@ input[type="date"],
   font-size: 0.88rem;
   font-family: inherit;
   transition: all var(--transition-fast);
+  outline: none;
+  cursor: pointer;
 }
 
-.field-item input:focus {
+.field-item select option {
+  background: #111827;
+  color: #f3f4f6;
+  padding: 8px;
+}
+
+.field-item input:focus,
+.field-item select:focus,
+.field-select:focus {
   background: var(--surface);
   border-color: var(--accent);
+}
+
+/* Custom Select Dropdown (Sucursales Experience) */
+.custom-select-container {
+  position: relative;
+  width: 100%;
+}
+
+.custom-select-trigger {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--fg);
+  font-size: 0.88rem;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  cursor: pointer;
+  outline: none;
+  transition: all var(--transition-fast);
+  text-align: left;
+}
+
+.custom-select-trigger:hover {
+  background: var(--surface-3);
+  border-color: var(--line-strong);
+}
+
+.custom-select-trigger.is-open,
+.custom-select-trigger:focus {
+  border-color: var(--accent);
+  background: var(--surface);
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.15);
+}
+
+.custom-select-text {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.custom-select-text.is-placeholder {
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+.custom-select-chevron {
+  color: var(--fg-muted);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.custom-select-chevron.rotated {
+  transform: rotate(180deg);
+  color: var(--accent);
+}
+
+.custom-select-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 120;
+  background: #151d30;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  backdrop-filter: blur(12px);
+}
+
+.custom-select-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 12px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: transparent;
+  color: #e2e8f0;
+  font-size: 0.88rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.custom-select-option:hover {
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+}
+
+.custom-select-option.is-selected {
+  background: rgba(56, 189, 248, 0.18);
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+.custom-select-check {
+  color: #38bdf8;
+}
+
+/* Stacking Order for Setup Form Fields */
+.field-item-store {
+  position: relative;
+  z-index: 40;
+}
+
+.field-item-datepicker {
+  position: relative;
+  z-index: 30;
+}
+
+.field-item-store.is-active,
+.field-item-store:focus-within {
+  z-index: 50;
+}
+
+.field-item-datepicker:focus-within,
+.field-item-datepicker:has(.is-open) {
+  z-index: 60;
+}
+
+.custom-datepicker-container.is-open {
+  z-index: 150;
 }
 
 /* Custom DatePicker Component */
@@ -954,7 +1103,7 @@ input[type="date"],
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
-  z-index: 150;
+  z-index: 300;
   width: 280px;
   background: #182238;
   border: 1px solid var(--line-strong);

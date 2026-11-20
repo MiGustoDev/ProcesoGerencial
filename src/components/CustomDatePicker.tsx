@@ -127,7 +127,7 @@ export const CustomDatePicker: React.FC<CustomDatePickerProps> = ({ value, onCha
   };
 
   return (
-    <div className="custom-datepicker-container" ref={containerRef}>
+    <div className={`custom-datepicker-container ${isOpen ? 'is-open' : ''}`} ref={containerRef}>
       <button
         type="button"
         className="datepicker-trigger-btn"

@@ -164,30 +164,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </div>
 
-          {/* Center: Badge de Auditoría Experience */}
-          <div className="header-center-mode-wrap">
-            <div 
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '6px 14px',
-                borderRadius: '24px',
-                background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.16) 0%, rgba(217, 119, 6, 0.26) 100%)',
-                border: '1px solid rgba(245, 158, 11, 0.45)',
-                boxShadow: '0 2px 10px rgba(245, 158, 11, 0.12)'
-              }}
-            >
-              <span style={{ fontSize: '13px' }}>✨</span>
-              <span style={{ fontSize: '12px', fontWeight: 800, color: '#fbbf24', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
-                Auditoría Experience
-              </span>
-              <span style={{ fontSize: '10px', color: '#fef3c7', background: 'rgba(245, 158, 11, 0.35)', padding: '2px 7px', borderRadius: '10px', fontWeight: 700 }}>
-                12 fases
-              </span>
-            </div>
-          </div>
-
           {/* Right Section: Mobile Hamburger Menu & Desktop Switch */}
           <div className="header-right-nav-section">
             <button

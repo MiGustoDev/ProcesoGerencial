@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { AuditFields } from '../types/audit';
-import { Store, User, Users, ShoppingBag, Briefcase, Play, X } from 'lucide-react';
+import { Store, User, Users, ShoppingBag, Briefcase, Play, X, ChevronDown, Check } from 'lucide-react';
 import { CustomDatePicker } from './CustomDatePicker';
 
 interface GeneralFieldsProps {
@@ -12,6 +12,12 @@ interface GeneralFieldsProps {
   onClose?: () => void;
 }
 
+const EXPERIENCE_STORES = [
+  'Vicente López',
+  'Cañitas',
+  'Villa Crespo'
+];
+
 export const GeneralFields: React.FC<GeneralFieldsProps> = ({
   fields,
   onFieldChange,
@@ -20,16 +26,43 @@ export const GeneralFields: React.FC<GeneralFieldsProps> = ({
   onClose
 }) => {
   const containerRef = useRef<HTMLElement>(null);
+  const [isStoreOpen, setIsStoreOpen] = useState(false);
+  const storeDropdownRef = useRef<HTMLDivElement>(null);
+  const storeMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (containerRef.current) {
       gsap.fromTo(
         containerRef.current.querySelectorAll('.field-item, .start-audit-banner'),
         { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, duration: 0.35, stagger: 0.04, ease: 'power2.out' }
+        { opacity: 1, y: 0, duration: 0.35, stagger: 0.04, ease: 'power2.out', clearProps: 'transform' }
       );
     }
   }, [isStarted]);
+
+  // Click outside listener for store dropdown
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (storeDropdownRef.current && !storeDropdownRef.current.contains(e.target as Node)) {
+        setIsStoreOpen(false);
+      }
+    };
+    if (isStoreOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isStoreOpen]);
+
+  // Animate store menu with GSAP
+  useEffect(() => {
+    if (isStoreOpen && storeMenuRef.current) {
+      gsap.fromTo(
+        storeMenuRef.current,
+        { opacity: 0, y: -6, scale: 0.98 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.2, ease: 'power2.out' }
+      );
+    }
+  }, [isStoreOpen]);
 
   return (
     <section ref={containerRef} className="general-card-setup card" aria-label="Nivel 0: Datos de la Sucursal">
@@ -55,46 +88,54 @@ export const GeneralFields: React.FC<GeneralFieldsProps> = ({
       </div>
 
       <div className="fields-single-line">
-        {/* 1. Tienda (Obligatorio - Exclusivo Experience) */}
-        <div className="field-item">
-          <label htmlFor="f_tienda">
+        {/* 1. Tienda (Desplegable Estilizado Exclusivo Experience) */}
+        <div className={`field-item field-item-store ${isStoreOpen ? 'is-active' : ''}`}>
+          <label htmlFor="f_tienda_trigger">
             <Store size={14} className="field-icon" />
             <span>Sucursal Experience <span className="req-star">*</span></span>
           </label>
-          <input
-            id="f_tienda"
-            type="text"
-            list="experience-stores-list"
-            autoComplete="off"
-            value={fields.f_tienda}
-            onChange={e => onFieldChange('f_tienda', e.target.value)}
-            placeholder="Seleccioná o escribí la sucursal"
-          />
-          <datalist id="experience-stores-list">
-            <option value="Vicente López" />
-            <option value="Cañitas" />
-            <option value="Villa Crespo" />
-          </datalist>
-          <div style={{ display: 'flex', gap: '6px', marginTop: '6px', flexWrap: 'wrap' }}>
-            {['Vicente López', 'Cañitas', 'Villa Crespo'].map((store) => (
-              <button
-                key={store}
-                type="button"
-                onClick={() => onFieldChange('f_tienda', store)}
-                style={{
-                  fontSize: '11px',
-                  fontWeight: fields.f_tienda === store ? '700' : '500',
-                  padding: '3px 8px',
-                  borderRadius: '12px',
-                  border: fields.f_tienda === store ? '1px solid #38bdf8' : '1px solid rgba(255,255,255,0.15)',
-                  background: fields.f_tienda === store ? 'rgba(56, 189, 248, 0.2)' : 'rgba(255,255,255,0.05)',
-                  color: fields.f_tienda === store ? '#38bdf8' : '#cbd5e1',
-                  cursor: 'pointer'
-                }}
-              >
-                {store}
-              </button>
-            ))}
+
+          <div className="custom-select-container" ref={storeDropdownRef}>
+            <button
+              id="f_tienda_trigger"
+              type="button"
+              className={`custom-select-trigger ${isStoreOpen ? 'is-open' : ''}`}
+              onClick={() => setIsStoreOpen(prev => !prev)}
+              aria-haspopup="listbox"
+              aria-expanded={isStoreOpen}
+            >
+              <span className={`custom-select-text ${!fields.f_tienda ? 'is-placeholder' : ''}`}>
+                {fields.f_tienda || 'Seleccioná la sucursal...'}
+              </span>
+              <ChevronDown size={15} className={`custom-select-chevron ${isStoreOpen ? 'rotated' : ''}`} />
+            </button>
+
+            {/* Input oculto para preservar id f_tienda en caso de llamadas directas */}
+            <input type="hidden" id="f_tienda" value={fields.f_tienda} />
+
+            {isStoreOpen && (
+              <div className="custom-select-menu" ref={storeMenuRef} role="listbox">
+                {EXPERIENCE_STORES.map((store) => {
+                  const isSelected = fields.f_tienda === store;
+                  return (
+                    <button
+                      key={store}
+                      type="button"
+                      role="option"
+                      aria-selected={isSelected}
+                      className={`custom-select-option ${isSelected ? 'is-selected' : ''}`}
+                      onClick={() => {
+                        onFieldChange('f_tienda', store);
+                        setIsStoreOpen(false);
+                      }}
+                    >
+                      <span>{store}</span>
+                      {isSelected && <Check size={15} className="custom-select-check" />}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
 
@@ -115,7 +156,7 @@ export const GeneralFields: React.FC<GeneralFieldsProps> = ({
         </div>
 
         {/* 3. Fecha con Custom DatePicker */}
-        <div className="field-item">
+        <div className="field-item field-item-datepicker">
           <label>
             <span>Fecha de auditoría</span>
           </label>
