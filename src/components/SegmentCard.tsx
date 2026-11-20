@@ -4,7 +4,7 @@ import { ItemAnswer, ItemStatus, SegmentCalculation } from '../types/audit';
 import { f2 } from '../utils/formatters';
 import { PASS_SCORE, SEGMENTS } from '../data/segments';
 import { SegmentItem } from './SegmentItem';
-import { ChevronRight, ChevronLeft, ArrowRight, ChevronDown, ChevronUp, AlertTriangle, Lock } from 'lucide-react';
+import { Check, ChevronRight, ChevronLeft, ArrowRight, ChevronDown, ChevronUp, AlertTriangle, Lock } from 'lucide-react';
 
 interface SegmentCardProps {
   segmentData: SegmentCalculation;
@@ -103,6 +103,7 @@ export const SegmentCard: React.FC<SegmentCardProps> = ({
                   }}
                   title="Marcar resto del segmento como Cumple"
                 >
+                  <Check size={14} strokeWidth={2.5} />
                   <span>Todo OK ({seg.items.length - segDone})</span>
                 </button>
               )}

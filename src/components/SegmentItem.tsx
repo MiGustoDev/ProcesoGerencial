@@ -215,8 +215,8 @@ export const SegmentItem: React.FC<SegmentItemProps> = ({
             aria-pressed={currentStatus === 'partial'}
             title="Calificación parcial ponderada"
           >
-            <Slash size={11} className="choice-icon rotate-icon" />
-            <span>parcial</span>
+            <Slash size={12} className="choice-icon rotate-icon" />
+            <span>Parcial</span>
           </button>
         </div>
 
