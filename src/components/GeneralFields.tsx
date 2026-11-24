@@ -105,7 +105,12 @@ export const GeneralFields: React.FC<GeneralFieldsProps> = ({
               aria-expanded={isStoreOpen}
             >
               <span className={`custom-select-text ${!fields.f_tienda ? 'is-placeholder' : ''}`}>
-                {fields.f_tienda || 'Seleccioná la sucursal...'}
+                {fields.f_tienda || (
+                  <>
+                    <span className="placeholder-desktop">Seleccioná la sucursal...</span>
+                    <span className="placeholder-mobile">Seleccionar...</span>
+                  </>
+                )}
               </span>
               <ChevronDown size={15} className={`custom-select-chevron ${isStoreOpen ? 'rotated' : ''}`} />
             </button>
