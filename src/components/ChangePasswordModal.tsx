@@ -28,6 +28,17 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
   const backdropRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
 
+  // Lock body scroll when modal is open to hide scrollbar
+  useEffect(() => {
+    if (isOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isOpen]);
+
   // Smooth entrance animation
   useEffect(() => {
     if (isOpen && cardRef.current && backdropRef.current) {
@@ -194,7 +205,7 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
           {/* Current Password */}
           <div className="change-pwd-field">
             <label className="change-pwd-label">
-              Contraseña Actual
+              Contraseña actual
             </label>
             <div className="change-pwd-input-wrap">
               <input
@@ -218,7 +229,7 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
           {/* New Password */}
           <div className="change-pwd-field">
             <label className="change-pwd-label">
-              Nueva Contraseña
+              Nueva contraseña
             </label>
             <div className="change-pwd-input-wrap">
               <input
@@ -242,7 +253,7 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
           {/* Confirm New Password */}
           <div className="change-pwd-field">
             <label className="change-pwd-label">
-              Confirmar Nueva Contraseña
+              Confirmar nueva contraseña
             </label>
             <div className="change-pwd-input-wrap">
               <input
