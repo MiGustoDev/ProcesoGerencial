@@ -1,26 +1,36 @@
-# Configuración Apache / DonWeb cPanel para Single Page Application (React / Vite)
+# Configuración Apache / DonWeb (cPanel / Ferozo) para Single Page Application (React / Vite)
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteBase /operaciones/auditorias/
   
   # Si el archivo o carpeta solicitado existe, servirlo directamente
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
   
-  # De lo contrario redirigir a index.html
+  # De lo contrario redirigir a index.html (funciona en raíz o subdirectorios)
   RewriteRule ^ index.html [L]
 </IfModule>
 
-# Tipos MIME correctos para módulos JavaScript y estilos
+# Tipos MIME correctos para módulos JavaScript modernos, estilos y fuentes
 <IfModule mod_mime.c>
   AddType application/javascript .js .mjs
   AddType text/css .css
   AddType image/svg+xml .svg
+  AddType application/json .json
+  AddType font/woff2 .woff2
 </IfModule>
 
 # Habilitar compresión Gzip para mayor velocidad
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
 </IfModule>
+
+# Prevenir almacenamiento en caché de index.html para que los despliegues se actualicen inmediatamente
+<Files "index.html">
+  <IfModule mod_headers.c>
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+  </IfModule>
+</Files>
