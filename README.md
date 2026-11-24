@@ -2,10 +2,10 @@
 
   <img src="public/logo-script.png" alt="Mi Gusto Logo" width="220" />
 
-  # Portal de Auditorías Operativas
+  # Auditoría Mi Gusto Experience · Sistema Gerencial
 
   <p align="center">
-    <strong>Sistema integral de control de calidad, evaluación de estándares y diagnóstico de salud operativa para la red de locales Mi Gusto.</strong>
+    <strong>Plataforma integral de control operativo, auditoría gerencial y estándares de calidad para la red de sucursales Mi Gusto Experience.</strong>
   </p>
 
   <p align="center">
@@ -25,30 +25,44 @@
 <table width="100%">
   <tr>
     <td width="50%" align="center">
-      <img src="public/screenshots/Screenshot_1.png" alt="Portal de Acceso" width="100%" />
+      <img src="public/screenshots/Screenshot_5.png" alt="Portal de Acceso" width="100%" />
       <br />
-      <b>🔐 Acceso Corporativo & Autenticación</b>
-      <p><i>Ingreso seguro con perfiles por rol y credenciales institucionales.</i></p>
+      <b>🔐 Acceso Corporativo & Perfiles de Usuario</b>
+      <p><i>Ingreso seguro con perfiles restringidos para Administradores y Gerencias Experience.</i></p>
     </td>
     <td width="50%" align="center">
-      <img src="public/screenshots/Screenshot_2.png" alt="Evaluación Operativa" width="100%" />
+      <img src="public/screenshots/Screenshot_6.png" alt="Configuración de Auditoría" width="100%" />
       <br />
-      <b>📋 Evaluación Operativa en Tiempo Real</b>
-      <p><i>Navegación dinámica por fases, scoring en vivo y carga de evidencias.</i></p>
+      <b>🏪 Configuración Inicial de Auditoría (Nivel 0)</b>
+      <p><i>Selección exclusiva de sucursal Experience, fecha de relevamiento y datos del auditor.</i></p>
     </td>
   </tr>
   <tr>
     <td width="50%" align="center">
-      <img src="public/screenshots/Screenshot_3.png" alt="Historial Centralizado" width="100%" />
+      <img src="public/screenshots/Screenshot_7.png" alt="Evaluación en 12 Fases" width="100%" />
       <br />
-      <b>🗂️ Historial Centralizado & Filtros</b>
-      <p><i>Búsqueda instantánea por tienda, fecha o auditor con badges de estado.</i></p>
+      <b>📋 Evaluación Operativa en 12 Fases</b>
+      <p><i>70 ítems ponderados sobre 100 pts, acciones rápidas "Todo OK", cámara y scoring en vivo.</i></p>
     </td>
     <td width="50%" align="center">
-      <img src="public/screenshots/Screenshot_4.png" alt="Diagnóstico y Métricas" width="100%" />
+      <img src="public/screenshots/Screenshot_8.png" alt="Historial Centralizado" width="100%" />
       <br />
-      <b>📊 Diagnóstico de Salud Operativa & KPIs</b>
-      <p><i>Desglose por fase, ponderaciones y reporte de hallazgos para planes de acción.</i></p>
+      <b>🗂️ Historial Centralizado & Filtros Avanzados</b>
+      <p><i>Búsqueda instantánea, selector de rango de fechas y trazabilidad sincronizada en la nube.</i></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <img src="public/screenshots/Screenshot_9.png" alt="Dashboard Ejecutivo" width="100%" />
+      <br />
+      <b>📊 Dashboard Ejecutivo & KPIs de Sucursales</b>
+      <p><i>Monitoreo gerencial de estados (Aprobado, Revisión, Críticas y Sin Auditar) en la red Experience.</i></p>
+    </td>
+    <td width="50%" align="center">
+      <img src="public/screenshots/Screenshot_10.png" alt="Modal de Seguridad" width="100%" />
+      <br />
+      <b>🔒 Gestión de Seguridad & Claves en Supabase</b>
+      <p><i>Actualización de contraseña persistida en base de datos con interfaz ejecutiva sin scroll invasivo.</i></p>
     </td>
   </tr>
 </table>
@@ -57,83 +71,89 @@
 
 ## ✨ Características Principales
 
-### 🎯 Evaluación por Fases Estandarizadas
-- **Segmentación Operativa Integral**: Cobertura estructurada de áreas clave (Atención al Cliente, Calidad del Producto, Seguridad e Higiene, Limpieza, Mantenimiento, KPIs, Administración, RRHH, Bodega, Fitzza/Sin TACC, Pizza en bollo y Salón Experience).
-- **Puntuación Ponderada en Vivo**: Cálculo dinámico del puntaje final sobre 100 puntos con metas automáticas de aprobación (meta estándar: 85 pts) y desaprobación automática ante ítem crítico de vencimiento.
-- **Formato Exclusivo Experience**: Auditoría especializada en 12 fases operativas para las tiendas Experience de la red: **Vicente López**, **Cañitas** y **Villa Crespo**.
+### 🎯 Formato 100% Exclusivo Experience
+- **Alcance Específico de Sucursales**: Diseñado exclusivamente para el formato Experience de la cadena: **Vicente López**, **Cañitas** y **Villa Crespo**.
+- **12 Fases Estandarizadas**: Cobertura exhaustiva de las áreas operativas:
+  1. *Experiencia del cliente e imagen*
+  2. *Calidad de producto*
+  3. *Seguridad e higiene*
+  4. *Limpieza y orden*
+  5. *Mantenimiento e infraestructura*
+  6. *KPIs y gestión operativa*
+  7. *Administración y caja*
+  8. *Recursos Humanos y equipo*
+  9. *Bodega y stock*
+  10. *Área Sin TACC / Fitzza*
+  11. *Pizza en bollo*
+  12. *Salón y Servicio Experience*
+- **Matriz de Calificación Gerencial**: 70 ítems ponderados sobre un total de **100 puntos**, con umbral de aprobación fijado en **85 puntos**.
+- **Regla de Ítems Críticos**: Desaprobación automática ante desvíos críticos graves (ej. vencimientos o seguridad alimentaria).
 
-### 📸 Registro y Control de Desvíos
-- **Gestión de Hallazgos**: Detección granular de desvíos con categorización inmediata (Cumple, No Cumple, Parcial).
-- **Evidencia Visual**: Registro fotográfico integrado en cada ítem evaluado para respaldar las observaciones detectadas en sucursal.
-- **Acciones Rápidas**: Marcado por bloques y navegación fluida entre fases sin fricción ni pérdida de datos.
+### ⚡ Flujo de Auditoría Ágil y Confiable
+- **Acciones Rápidas ("Todo OK")**: Función para certificar por bloques los segmentos sin desvíos en un solo toque, optimizando los tiempos de auditoría en salón.
+- **Adjuntos de Evidencia Fotográfica**: Carga y compresión automática de fotos por ítem almacenadas en Supabase Storage (`experience-audit-photos`).
+- **Resiliencia y Sincronización Offline**: Mecanismo de persistencia local preventiva que protege el progreso ante interrupciones de conectividad en tienda.
 
-### 📈 Diagnóstico de Salud Operativa
-- **KPIs de Efectividad Global**: Métricas visuales de efectividad, porcentaje de calidad alcanzada y categorización de fases (En Estándar, Aceptables y Críticas).
-- **Síntesis Ejecutiva Automatizada**: Diagnóstico analítico generado al instante, destacando fortalezas y puntos de atención prioritaria.
-- **Reportes Listos para Exportar**: Generación de informes en formato digital (PDF / exportación estructurada) listos para auditorías gerenciales.
+### 📊 Dashboard e Historial Inteligente
+- **Métricas Ejecutivas en Tiempo Real**: Visualización de tiendas auditadas, promedios de calificación y segmentación de estado (Aprobado, Para Revisión, Crítica, Sin Auditar).
+- **Filtro de Rango de Fechas Integrado**: Selector responsivo de períodos temporales sin solapamientos ni desbordes en dispositivos móviles.
+- **Roles y Permisos Rigurosos**:
+  - **Administradores General**: Control total sobre el sistema, edición, auditorías y eliminación de registros históricos.
+  - **Gerencias Experience**: Carga de auditorías, consulta de historial propio, exportación y visualización del panel general.
 
-### 🔒 Seguridad y Persistencia Corporativa
-- **Sincronización en la Nube**: Almacenamiento centralizado con Supabase para consulta distribuida y colaboración en tiempo real.
-- **Resiliencia Offline**: Mecanismo de persistencia local preventiva para evitar pérdidas de progreso ante fluctuaciones de conectividad en planta.
-- **Control de Roles**: Permisos diferenciados para auditoría, consulta y gestión de registros históricos.
-
----
-
-## 🎨 Experiencia Visual & Diseño
-
-La interfaz fue diseñada bajo un **Pure Dark Mode** de nivel industrial, concebido para brindar la máxima legibilidad y confort visual durante auditorías de campo:
-- **Paleta Armónica**: Fondos Slate oscuros (`#0b0f19`, `#131b2e`), acentos azul eléctrico (`#3b82f6`) y contrastes funcionales según el dictamen operativo.
-- **Micro-interacciones Fluidas**: Transiciones suaves impulsadas por **GSAP**, facilitando una navegación intuitiva y ágil entre paneles.
-- **Diseño Responsive**: Interfaz totalmente adaptable a tablets, smartphones y terminales de escritorio.
+### 🎨 Experiencia Visual & Diseño Ejecutivo
+- **Paleta Slate Mate**: Diseñado con contrastes confortables (`#162540`, `#131b2e`), acentos azul eléctrico (`#3b82f6` / `#0284c7`), verde esmeralda funcional (`#10b981`) y rojo coral (`#ef4444`).
+- **Micro-interacciones Fluidas**: Transiciones suaves impulsadas por **GSAP**.
+- **Responsive Mobile-First**: Optimizado minuciosamente para smartphones y tablets en campo, garantizando campos de una sola línea y popups adaptativos.
 
 ---
 
 ## 🚀 Instalación y Puesta en Marcha
 
 ### Prerrequisitos
-- **Node.js** (versión 18.0 o superior recomendada)
-- Gestor de paquetes: **npm**, **pnpm** o **yarn**
+- **Node.js** (v18.0 o superior)
+- **pnpm** (recomendado para este proyecto) o npm
 
 ### 1. Clonar el repositorio
 ```bash
-git clone https://github.com/tu-usuario/MiGusto-AuditApp.git
-cd MiGusto-AuditApp
+git clone https://github.com/tu-usuario/MG-ProcesoGerencial.git
+cd MG-ProcesoGerencial
 ```
 
 ### 2. Instalar dependencias
 ```bash
-npm install
+pnpm install
 ```
 
 ### 3. Configuración de Variables de Entorno
-Crea un archivo `.env` en la raíz del proyecto con tus credenciales de Supabase:
+Crea un archivo `.env` en la raíz del proyecto con las credenciales de tu proyecto de Supabase:
 
 ```env
 VITE_SUPABASE_URL=https://tu-proyecto.supabase.co
 VITE_SUPABASE_ANON_KEY=tu-anon-key-aqui
+VITE_SUPABASE_BUCKET=experience-audit-photos
 ```
 
 > [!NOTE]
-> Para la estructura de tablas y políticas de seguridad (RLS), ejecuta el script [`supabase_schema.sql`](supabase_schema.sql) en el **SQL Editor** de tu panel de Supabase.
+> Para inicializar las tablas, políticas de seguridad RLS y buckets de almacenamiento, ejecuta el script [`supabase_schema.sql`](supabase_schema.sql) en el **SQL Editor** de tu consola de Supabase.
 
 ### 4. Iniciar en modo desarrollo
 ```bash
-npm run dev
+pnpm run dev
 ```
-La aplicación quedará disponible en el navegador (por defecto en `http://localhost:5173`).
+La aplicación quedará disponible en `http://localhost:3000` (o el puerto configurado por Vite).
 
 ### 5. Compilar para producción
-Para generar el build optimizado de producción:
 ```bash
-npm run build
+pnpm run build
 ```
 Para previsualizar localmente la versión compilada:
 ```bash
-npm run preview
+pnpm run preview
 ```
 
 ---
 
 <div align="center">
-  <sub>Desarrollado para el Departamento de Operaciones y Calidad de <strong>Mi Gusto</strong>.</sub>
+  <sub>Desarrollado para el Departamento de Operaciones y Calidad de <strong>Mi Gusto Experience</strong>.</sub>
 </div>
