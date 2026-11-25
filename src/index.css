@@ -6832,7 +6832,9 @@ html, body {
   flex-direction: column;
   position: relative;
   overflow-x: hidden;
-  background: radial-gradient(circle at 50% 20%, #131b2e 0%, #070a11 100%);
+  background: var(--bg);
+  background-image: var(--bg-gradient);
+  background-attachment: fixed;
 }
 
 .login-card-container {
@@ -6847,27 +6849,7 @@ html, body {
 }
 
 .login-bg-glow {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  filter: blur(90px);
-}
-
-.login-bg-glow-1 {
-  width: 380px;
-  height: 380px;
-  top: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(59, 130, 246, 0.14);
-}
-
-.login-bg-glow-2 {
-  width: 320px;
-  height: 320px;
-  bottom: 10%;
-  right: 15%;
-  background: rgba(37, 99, 235, 0.08);
+  display: none;
 }
 
 .login-card {
@@ -6982,6 +6964,16 @@ html, body {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--fg-muted);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.login-label .req-star {
+  color: #ef4444;
+  font-size: 0.85rem;
+  font-weight: 800;
+  line-height: 1;
 }
 
 .login-input-wrap {

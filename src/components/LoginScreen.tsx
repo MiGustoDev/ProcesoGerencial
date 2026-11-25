@@ -34,10 +34,6 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
 
   return (
     <div className="login-screen-wrapper">
-      {/* Background glow orbs */}
-      <div className="login-bg-glow login-bg-glow-1" />
-      <div className="login-bg-glow login-bg-glow-2" />
-
       {/* Main Login Card Container */}
       <div className="login-card-container">
         <div className="login-card">
@@ -74,7 +70,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
           <form onSubmit={handleSubmit} className="login-form">
             <div className="login-field-group">
               <label className="login-label" htmlFor="login-email">
-                Correo Institucional
+                Correo Institucional <span className="req-star">*</span>
               </label>
               <div className="login-input-wrap">
                 <Mail size={16} className="login-input-icon" />
@@ -93,7 +89,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
 
             <div className="login-field-group">
               <label className="login-label" htmlFor="login-password">
-                Contraseña
+                Contraseña <span className="req-star">*</span>
               </label>
               <div className="login-input-wrap">
                 <Lock size={16} className="login-input-icon" />
