@@ -45,7 +45,7 @@ export const AUTHORIZED_USERS: {
     role: 'Gerente',
     roleLabel: 'Gerente Experience',
     password: 'MiGusto123',
-    avatarUrl: 'users/admin.png'
+    avatarUrl: 'users/martin.png'
   },
   {
     email: 'sashaalfini@migusto.com.ar',
@@ -53,7 +53,7 @@ export const AUTHORIZED_USERS: {
     role: 'Gerente',
     roleLabel: 'Gerente Experience',
     password: 'MiGusto123',
-    avatarUrl: 'users/admin.png'
+    avatarUrl: 'users/sasha.png'
   },
   {
     email: 'selenehernandez@migusto.com.ar',
@@ -61,7 +61,7 @@ export const AUTHORIZED_USERS: {
     role: 'Gerente',
     roleLabel: 'Gerente Experience',
     password: 'MiGusto123',
-    avatarUrl: 'users/admin.png'
+    avatarUrl: 'users/selene.png'
   },
 
   // Administradores (Acceso total)
@@ -115,6 +115,9 @@ export function getUserAvatarUrl(userOrEmail?: UserProfile | string | null): str
   const name = typeof userOrEmail !== 'string' ? (userOrEmail.name || '').toLowerCase() : '';
   if (name.includes('maría') || name.includes('maria')) return 'users/maria.png';
   if (name.includes('lidya') || name.includes('lydia')) return 'users/lydia.png';
+  if (name.includes('martín') || name.includes('martin')) return 'users/martin.png';
+  if (name.includes('sasha')) return 'users/sasha.png';
+  if (name.includes('selene')) return 'users/selene.png';
   if (name.includes('admin') || name.includes('administración')) return 'users/admin.png';
 
   return 'users/admin.png';
