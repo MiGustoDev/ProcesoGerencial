@@ -39,6 +39,30 @@ export const AUTHORIZED_USERS: {
     password: 'MiGusto123.',
     avatarUrl: 'users/admin.png'
   },
+  {
+    email: 'martinsastre@migusto.com.ar',
+    name: 'Martín Sastre',
+    role: 'Gerente',
+    roleLabel: 'Gerente Experience',
+    password: 'MiGusto123',
+    avatarUrl: 'users/admin.png'
+  },
+  {
+    email: 'sashaalfini@migusto.com.ar',
+    name: 'Sasha Alfini',
+    role: 'Gerente',
+    roleLabel: 'Gerente Experience',
+    password: 'MiGusto123',
+    avatarUrl: 'users/admin.png'
+  },
+  {
+    email: 'selenehernandez@migusto.com.ar',
+    name: 'Selene Hernández',
+    role: 'Gerente',
+    roleLabel: 'Gerente Experience',
+    password: 'MiGusto123',
+    avatarUrl: 'users/admin.png'
+  },
 
   // Administradores (Acceso total)
   {
@@ -209,7 +233,12 @@ export async function updateUserPassword(
   const currentMap = await fetchCustomPasswords();
   const expectedPassword = currentMap[cleanEmail] || account.password;
 
-  if (cleanCurrent !== expectedPassword) {
+  const isCurrentMatch =
+    cleanCurrent === expectedPassword ||
+    (expectedPassword.endsWith('.') && cleanCurrent === expectedPassword.slice(0, -1)) ||
+    (!expectedPassword.endsWith('.') && cleanCurrent === `${expectedPassword}.`);
+
+  if (!isCurrentMatch) {
     return { success: false, error: 'La contraseña actual ingresada es incorrecta.' };
   }
 
@@ -270,7 +299,12 @@ export async function authenticateAsync(
 
   const effectivePassword = customMap[emailClean] || user.password;
 
-  if (passClean === effectivePassword) {
+  const isPasswordMatch =
+    passClean === effectivePassword ||
+    (effectivePassword.endsWith('.') && passClean === effectivePassword.slice(0, -1)) ||
+    (!effectivePassword.endsWith('.') && passClean === `${effectivePassword}.`);
+
+  if (isPasswordMatch) {
     const profile: UserProfile = {
       email: user.email,
       name: user.name,

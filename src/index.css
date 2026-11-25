@@ -7367,6 +7367,16 @@ html, body {
   font-weight: 600;
   color: #cbd5e1;
   letter-spacing: normal;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.change-pwd-label .req-star {
+  color: #ef4444;
+  font-size: 0.88rem;
+  font-weight: 800;
+  line-height: 1;
 }
 
 .change-pwd-input-wrap {
